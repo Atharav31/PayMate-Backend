@@ -2,12 +2,20 @@ const express = require("express");
 const morgan = require("morgan");
 const authRouter = require("./routes/LoginRoutes");
 const errorHandler = require("./middlewares/errorHandler");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
 
 const app = express();
 require("./config/database");
-
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 app.use(morgan("dev")); // Log all requests to the console
 app.use(express.json()); // To read JSON
+app.use(cookieParser());
 
 app.use("/", authRouter);
 
