@@ -45,14 +45,17 @@ exports.Signup = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new User({ email, password: hashedPassword, name });
     await newUser.save();
-    res
-      .status(201)
-      .json({ message: "User created successfully", user: newUser });
+
+    // Encrypt the response
+    const encryptedResponse = encrypt(
+      JSON.stringify({ message: "User created successfully", user: newUser })
+    );
+
+    res.status(201).json(encryptedResponse);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
-
 exports.Profile = async (req, res) => {
   try {
     const user = req.user;

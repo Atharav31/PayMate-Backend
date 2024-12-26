@@ -17,7 +17,7 @@ app.use(morgan("dev")); // Log all requests to the console
 app.use(express.json()); // To read JSON
 app.use(cookieParser());
 
-app.use("/", authRouter);
+app.use("/api", authRouter);
 
 // Error handling middleware
 app.use(errorHandler);
